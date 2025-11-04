@@ -16,11 +16,9 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
-	// Шаг 1: Добавляем состояние для применённых настроек
 	const [appliedState, setAppliedState] =
 		useState<ArticleStateType>(defaultArticleState);
 
-	// Шаг 1: Готовим CSS-переменные на основе состояния
 	const cssVars: CSSProperties = {
 		'--font-family': appliedState.fontFamilyOption.value,
 		'--font-size': appliedState.fontSizeOption.value,

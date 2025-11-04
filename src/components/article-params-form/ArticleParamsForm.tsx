@@ -3,6 +3,7 @@ import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
+import { Separator } from 'src/ui/separator';
 import {
 	type ArticleStateType,
 	backgroundColors,
@@ -14,6 +15,7 @@ import {
 
 import styles from './ArticleParamsForm.module.scss';
 import clsx from 'clsx';
+import { Text } from 'src/ui/text';
 
 type ArticleParamsFormProps = {
 	initialState: ArticleStateType;
@@ -81,6 +83,10 @@ export const ArticleParamsForm = ({
 					className={styles.form}
 					onSubmit={handleSubmit}
 					onReset={handleReset}>
+					<Text as='h1' size={31} weight={800} uppercase dynamicLite>
+						Задайте параметры
+					</Text>
+
 					<Select
 						title='Шрифт'
 						placeholder='Выберите шрифт'
@@ -120,6 +126,8 @@ export const ArticleParamsForm = ({
 						}}
 					/>
 
+					<Separator />
+
 					<Select
 						title='Цвет фона'
 						placeholder='Выберите цвет'
@@ -133,9 +141,8 @@ export const ArticleParamsForm = ({
 						}}
 					/>
 
-					<RadioGroup
+					<Select
 						title='Ширина контента'
-						name='contentWidth'
 						options={contentWidthArr}
 						selected={draft.contentWidth}
 						onChange={(option) => {
