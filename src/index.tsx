@@ -17,7 +17,8 @@ const root = createRoot(domNode);
 
 const App = () => {
 	// Шаг 1: Добавляем состояние для применённых настроек
-	const [appliedState] = useState<ArticleStateType>(defaultArticleState);
+	const [appliedState, setAppliedState] =
+		useState<ArticleStateType>(defaultArticleState);
 
 	// Шаг 1: Готовим CSS-переменные на основе состояния
 	const cssVars: CSSProperties = {
@@ -30,7 +31,12 @@ const App = () => {
 
 	return (
 		<main className={clsx(styles.main)} style={cssVars}>
-			<ArticleParamsForm />
+			<ArticleParamsForm
+				initialState={defaultArticleState}
+				appliedState={appliedState}
+				onApply={setAppliedState}
+				onReset={() => setAppliedState(defaultArticleState)}
+			/>
 			<Article />
 		</main>
 	);
