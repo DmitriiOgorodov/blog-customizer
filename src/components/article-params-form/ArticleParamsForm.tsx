@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
 
@@ -6,16 +6,29 @@ import styles from './ArticleParamsForm.module.scss';
 import clsx from 'clsx';
 
 export const ArticleParamsForm = () => {
-	// Шаг 2: Состояние открытия/закрытия сайдбара
 	const [isOpen, setIsOpen] = useState(false);
-
-	// Шаг 2: Реф для отслеживания кликов вне сайдбара
 	const sidebarRef = useRef<HTMLElement | null>(null);
 
-	// Шаг 2: Обработчик клика по стрелке
 	const handleArrowClick = () => {
 		setIsOpen((prevValue) => !prevValue);
 	};
+
+	// Шаг 3: Закрытие при клике вне сайдбара
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleClickOutside = (event: MouseEvent) => {
+			const target = event.target as Node;
+			if (sidebarRef.current && !sidebarRef.current.contains(target)) {
+				setIsOpen(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [isOpen]);
 
 	return (
 		<>
@@ -26,7 +39,6 @@ export const ArticleParamsForm = () => {
 					[styles.container_open]: isOpen,
 				})}>
 				<form className={styles.form}>
-					{/* Пока форма пустая - добавим поля на следующем шаге */}
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' htmlType='reset' type='clear' />
 						<Button title='Применить' htmlType='submit' type='apply' />
